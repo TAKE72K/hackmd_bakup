@@ -2,11 +2,20 @@
 
 - alpha submission: 2021/6/11 17:00
 
-- code repo: 
+- code repo: [(!!!!private now)https://github.com/TAKE72K/cad_contest2021](https://github.com/TAKE72K/cad_contest2021)
+
+plz enter your github account here↓
+```
+hyes941073@gmail.com
+
+```
 
 ## cad contest problemD
 [題目](http://iccad-contest.org/2021/tw/ProblemD-20210429.pdf)
+
 [Q&A](http://iccad-contest.org/2021/tw/Problem%20D_QA_0517.pdf)
+
+![](https://i.imgur.com/ocgVZk3.png)
 
 ## 論文參考
 [MP tree](https://sci-hub.se/10.1109/TCAD.2008.927760)
@@ -17,8 +26,14 @@
 ## 進度
 
 - [x] parser
+    - [x] 膨脹cell
+    - [x] 讀取constraint
 - [ ] data structure(progressing)
+    - [ ] **countour(progressing)**
+    - [ ] constraint tree(或是macro relation)
 - [ ] algorithm
+    - [ ] 主要在contour
+    - [ ] relax or anealing
 
 
 ## Worlflow
@@ -88,7 +103,7 @@ class contour
 {
     public:
         vector<contour_edge> E;
-        build_contour
+        build_contour()
 }
 ```
 ```
@@ -99,4 +114,37 @@ class contour's edge
     macro* touched;
 }
 ```
+* how to build?
 
+```python
+sort(M,order by x)
+
+init vector<contour>
+init contour sink(
+    E.insert( first_edge(start(0,0),end(0,H)))
+)
+for macro M in netlist NT:
+    init contour c
+    (
+        for E in countour c-1:
+            if E.start<M.LEFT_Y&&E.end>M.LEFT_Y:
+            #ie:macro inside vertical edge
+                c.insert(start(E.start),end(M.LEFT_Y))
+                E_H=c-1[E+1]
+                if E_H.start<M.LEFT_X&&E_H.end>M.LEFTY:
+                #ie overlapping
+                    M-1.push_left()
+                    #should be a recursive one to ensure a proper space
+                    c.insert(start(E_H.start),M.LEFT_X+M.W)
+                    #插入其餘邊
+            else:
+                c.insert(E)
+    )
+```
+
+### some thought to discuss
+
+插入新macro時一次推完再更新contour?
+![](https://i.imgur.com/F33Gfqk.jpg)
+
+樹的結構未定
