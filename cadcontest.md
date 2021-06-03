@@ -59,19 +59,7 @@ cond1(yes)->en
 ## class def
 
 ### macro
-```c++
-class MACRO
-{
-public:
-	MACRO();
-	~MACRO();
-	float macroW, macroH;
-	const char* macroName;
-	const char* macroType;
-	vector<MACROPIN*> macropins;
-	vector<BLOCKAGE*> macro_obs;
-};
-```
+分MODULE(可動)、PAD(不可動)
 ### NETLIST
 
 ```c++
@@ -143,6 +131,7 @@ for macro M in netlist NT:
 ```
 
 ### some thought to discuss
+
 
 插入新macro時一次推完再更新contour?
 ![](https://i.imgur.com/F33Gfqk.jpg)
